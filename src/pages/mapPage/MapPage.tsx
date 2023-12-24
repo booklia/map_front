@@ -60,6 +60,7 @@ const ChevronUp = () => {
 }
 const MapPage = ({ points, setPoints}: { points: Point[], setPoints: React.Dispatch<React.SetStateAction<Point[]>>}) => {
   const [open, setOpen] = useState(false)
+  const navigate = useNavigate();
   return (
     <div className='map-page'>
       <YMaps query={{apikey: process.env.REACT_APP_API_KEY}} >
@@ -75,13 +76,16 @@ const MapPage = ({ points, setPoints}: { points: Point[], setPoints: React.Dispa
           </Map>
         </div>
       </YMaps>
+      <div className='controls'>
+        <button className='button controls__button' onClick={() => navigate('/survey')}>Новые параметры</button>
+      </div>
       <div className='route-component' onClick={() => setOpen(!open)}>
         <span className='route-component__before'>{open && <ChevronDown/> }{!open && <ChevronUp/> }</span>
         {open && (
           <div className='route-component__content'>
             {
               points.map(el => (
-                <div>
+                <div className='route-component__card'>
                   <h4>{el.name}</h4>
                   <p>{el.category}</p>
                   <p>{el.address}</p>
